@@ -1,4 +1,84 @@
-<!-- NG-ZORRO -->
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank" style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;">
-  <img height="300" src="https://img.alicdn.com/tfs/TB1X.qJJgHqK1RjSZFgXXa7JXXa-89-131.svg">
-</a>
+<div nz-row nzJustify="center" class="inner-content">
+  <div nz-col nzSpan="24" nzMd="12" nzLg="8">
+    <div nz-row>
+      <h1 nz-col nzSpan="24" nz-typography>Inflation Calculator</h1>
+      <p nz-col nzSpan="24" nz-typography nzType="secondary">Inflation eats up your money. But by how much?</p>
+      <form nz-col nzSpan="24" nz-form>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="country">Country</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-group>
+              <nz-select [nzSize]="'large'" [(ngModel)]="countryData" (ngModelChange)="onCountryDataUpdated($event)"
+                id="country" [ngModelOptions]="{standalone: true}" nzAllowClear nzShowSearch="true">
+                <nz-option *ngFor="let item of countryAndCountryDataList" [nzValue]="item.countryData"
+                  [nzLabel]="item.country"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="countryData">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="value">Value</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-group>
+              <nz-input-number id="value" [nzSize]="'large'" [(ngModel)]="value" [nzFormatter]="currencyFormatter"
+                [nzParser]="currencyParser" (ngModelChange)="onNumberInputUpdated()"
+                [ngModelOptions]="{standalone: true}"></nz-input-number>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="countryData">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="from-year">From year</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-group>
+              <nz-input-number id="from-year" [nzSize]="'large'" [nzMin]="countryData.startYear"
+                [nzMax]="countryData.endYear" [nzStep]="1" [(ngModel)]="fromYear"
+                (ngModelChange)="onNumberInputUpdated()" [ngModelOptions]="{standalone: true}"></nz-input-number>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="countryData">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="target-year">Target year</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-group>
+              <nz-input-number id="target-year" [nzSize]="'large'" [nzMin]="countryData.startYear"
+                [nzMax]="countryData.endYear" [nzStep]="1" [(ngModel)]="targetYear"
+                (ngModelChange)="onNumberInputUpdated()" [ngModelOptions]="{standalone: true}"></nz-input-number>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div *ngIf="countryData && value" nz-col nzSpan="24" nz-typography>
+        <p>
+          <strong>{{ value | currency:countryData.currencyCode }}</strong> in {{ fromYear }} would be
+          <strong>{{targetValue | currency:countryData.currencyCode }}</strong> in {{ targetYear }}.
+        </p>
+        <p>
+          Over <strong>{{ fromYear | difference:targetYear }}</strong> years, that's a
+          <strong>{{ value | multiply:targetValue | number:'1.0-2' }}</strong> times differences.
+        </p>
+      </div>
+      <div nz-col nzSpan="24" nz-typography nzType="secondary">
+        <h3>Why made this?</h3>
+        <p>
+          I spend a lot of time talking with my mom whenever I go back home and I want to make it easier to compare our
+          lifestyles back then and now.
+        </p>
+        <h3>Where's your source of data?</h3>
+        <p>
+          I got the CSV file from <a href="https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG" target="_blank">The
+            World Bank</a>.
+        </p>
+        <h3>How can I contribute?</h3>
+        <p>Why would you want to do that?</p>
+        <h3>Do you want to say anything?</h3>
+        <p>Remember to tell your parents that you love them!</p>
+      </div>
+      <div nz-col nzSpan="24" nz-typography nzType="secondary">
+        <p style="text-align: center;">
+          <a href="https://github.com/tranHieuDev23/InflationCalculator" target="_blank">A project</a> by
+          <a href="https://github.com/tranHieuDev23" target="_blank">tranHieuDev23</a> with ❤️
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
