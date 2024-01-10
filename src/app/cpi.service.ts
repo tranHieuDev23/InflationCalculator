@@ -61,6 +61,10 @@ export class CpiService {
               countryData.cpiList.push(value);
             }
 
+            if (countryData.cpiList.length === 0) {
+              continue;
+            }
+
             countryDataMap.set(countryName, countryData);
           }
 
